@@ -1,0 +1,41 @@
+#!/bin/fish
+
+if test (count $argv) -lt 2
+    echo 'lg - grep me from a line!
+passes a string given in argument to grep
+usage:
+  lg STRING REGEXP ARG...
+arguments:
+  STRING : a string to give to grep
+  REGEXP : what to grep, often a regexp
+  ARG    : arguments given directly to grep
+why would I use lg?
+  you probably arleady wanted to grep from a line using
+    `echo "$yourvar" | grep "your regexp"`
+  using lg, it is much simpler and cleaner :
+    `lg "$yourvar" "your regexp"`
+  you may also wanna pass arguments to grep :
+    `lg "$yourvar" "your regexp" arg1 arg2 argX`
+  => give as much args as you want and the way you want
+  => just put them *after* STRING and REGEXP arguments
+example usage:
+  lg "Hi there!" "th.r.*!$"
+  lg "333@dew.sw" "\.[^\.]+$" -oE
+    > only output .sw
+  lg "rerere.ere" "\.e" -q
+    > no output : -q means silent
+  lg "HelLO::wOrLD" "hello" -i
+    > case insensitive
+for more infos look at grep\'s manual page : man grep
+---
+Note: lg needs at least 2 arguments (STRING and REGEXP)
+to work, unsless you\'ll see this message.
+---
+original distribution written in fish-shell script
+written by lapingenieur
+source code: https://github.com/lapingenieur/lg
+contact: lapingenieur@gmail.com'
+else
+    test (count $argv) -gt 2 && set extra $argv[3..(count $argv)]
+    echo "$argv[1]" | grep -e "$argv[2]" $extra
+end
